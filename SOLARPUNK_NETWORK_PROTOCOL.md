@@ -19,11 +19,6 @@ A Learning is a JSON object shared by a node when it discovers something valuabl
   "timestamp": "2024-01-30T12:00:00Z",
   "ethical_validation_score": 95
 }
-Discovery
-Nodes register themselves by adding their URL to a central, collaborative registry (like a GitHub Wiki or a simple JSON file in a designated repo).
-
-Nodes can also discover others by searching the GitHub topic solarpunk-autonomous-node
-
 
 ### 🚀 Step 2: Make Your Repository a Template
 Enable the "Template repository" feature on GitHub so others can fork a pre-configured starting point.
