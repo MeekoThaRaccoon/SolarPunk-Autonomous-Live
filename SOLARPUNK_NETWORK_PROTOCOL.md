@@ -5,16 +5,16 @@
 Nodes are independent but choose to share learnings to accelerate collective growth. No central authority.
 
 ## Sharing a "Learning"
-A Learning is a JSON object shared by a node when it discovers something valuable.
+A Learning is a JSON object shared when a node discovers something valuable.
 
 ```json
 {
   "node_id": "san-node-001",
-  "node_url": "https://meekotharaccoon.github.io/SolarPunk-Autonomous-Live/",
-  "learning_type": "tool_review|ethical_challenge|optimization|community_pattern",
-  "title": "Successfully deployed Supabase with offline-first config",
-  "description": "Detailed steps to configure Supabase for low-connectivity communities...",
-  "ai_agent": "Claude", // Which AI in the council generated this
+  "node_url": "https://example.com",
+  "learning_type": "tool_review|ethical_challenge|optimization",
+  "title": "Clear title of what was learned",
+  "description": "Detailed explanation of the discovery...",
+  "ai_agent": "Claude",
   "source": "OpenAlternative.co",
   "timestamp": "2024-01-30T12:00:00Z",
   "ethical_validation_score": 95
