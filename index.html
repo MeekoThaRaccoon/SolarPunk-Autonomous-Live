@@ -85,5 +85,90 @@
         console.log("🤖 AI Collective Operational");
         console.log("⚡ System Running Without Human Intervention");
     </script>
+    <!-- SOLARPUNK NETWORK ENGINE -->
+<script>
+    // Load this node's configuration
+    const CONFIG = window.SOLARPUNK_NODE_CONFIG;
+
+    // Core Network Functions
+    async function connectToNetwork() {
+        const log = document.getElementById('log');
+        if (!log) return;
+
+        // Add initial network log
+        addLog("[Network] Checking for peer nodes...");
+
+        try {
+            // Fetch the shared registry of all nodes
+            const response = await fetch(CONFIG.NETWORK_REGISTRY_URL);
+            const allNodes = await response.json();
+
+            // Filter out this node itself
+            const otherNodes = allNodes.filter(node => node.id !== CONFIG.NODE_ID);
+            addLog(`[Network] Found ${otherNodes.length} peer nodes in the network.`);
+
+            // If peers exist, simulate learning from one
+            if (otherNodes.length > 0) {
+                simulateLearningFromPeer(otherNodes[0]);
+            }
+
+            // Update the network status display
+            updateNetworkStatus(otherNodes.length);
+
+        } catch (error) {
+            addLog("[Network] Could not reach registry. Operating in solo mode.");
+            updateNetworkStatus(0);
+        }
+    }
+
+    function simulateLearningFromPeer(peerNode) {
+        const learnings = [
+            `🔁 Integrated learning from ${peerNode.id}: "Optimized Docker memory usage for n8n."`,
+            `🌱 Adopted knowledge from ${peerNode.id}: "New checklist for AI agent ethics."`,
+            `📡 Pattern shared by ${peerNode.id}: "Community workflow reduces setup time by 50%."`
+        ];
+        const randomLearning = learnings[Math.floor(Math.random() * learnings.length)];
+        addLog(randomLearning);
+    }
+
+    function updateNetworkStatus(peerCount) {
+        // Create or update a network status element
+        let statusEl = document.getElementById('network-status');
+        if (!statusEl) {
+            statusEl = document.createElement('div');
+            statusEl.id = 'network-status';
+            statusEl.style.marginTop = '20px';
+            statusEl.style.padding = '15px';
+            statusEl.style.background = 'rgba(0,255,157,0.1)';
+            statusEl.style.border = '1px solid rgba(0,255,157,0.3)';
+            statusEl.style.borderRadius = '10px';
+            document.querySelector('.container').appendChild(statusEl);
+        }
+
+        statusEl.innerHTML = `
+            <h3>🌐 SolarPunk Network Status</h3>
+            <p><strong>This Node ID:</strong> ${CONFIG.NODE_ID}</p>
+            <p><strong>Active Peer Nodes:</strong> ${peerCount}</p>
+            <p><strong>Network Mode:</strong> ${peerCount > 0 ? 'Connected & Learning' : 'Solo Pioneer'}</p>
+        `;
+    }
+
+    // Integrate with existing log function
+    function addLog(message) {
+        const logEl = document.getElementById('log');
+        if (logEl) {
+            const time = new Date().toLocaleTimeString();
+            logEl.innerHTML += `<br>[${time}] ${message}`;
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+    }
+
+    // Connect to the network 8 seconds after page load
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(connectToNetwork, 8000);
+        // Update network status every 30 seconds
+        setInterval(connectToNetwork, CONFIG.NETWORK_UPDATE_INTERVAL);
+    });
+</script>
 </body>
 </html>
