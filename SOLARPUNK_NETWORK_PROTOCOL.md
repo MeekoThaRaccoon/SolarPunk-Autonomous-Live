@@ -19,3 +19,53 @@ A Learning is a JSON object shared by a node when it discovers something valuabl
   "timestamp": "2024-01-30T12:00:00Z",
   "ethical_validation_score": 95
 }
+Discovery
+Nodes register themselves by adding their URL to a central, collaborative registry (like a GitHub Wiki or a simple JSON file in a designated repo).
+
+Nodes can also discover others by searching the GitHub topic solarpunk-autonomous-node.
+
+text
+
+### 🚀 Step 2: Make Your Repository a Template
+Enable the "Template repository" feature on GitHub so others can fork a pre-configured starting point.
+1.  Go to your repo's **Settings**.
+2.  Under **Options**, check the box that says **"Template repository"**.
+3.  Update your `README.md` with clear instructions: "Click 'Use this template' to deploy your own SolarPunk Autonomous Node and join the network."
+
+### 📡 Step 3: Add Network Functions to Your Dashboard
+Upgrade your `index.html` with simple networking logic. Add this section inside your `<script>` tag:
+
+```javascript
+// --- SolarPunk Network Functions ---
+const NODE_ID = 'san-node-001'; // You are Node 1!
+const NODE_REGISTRY_URL = 'https://raw.githubusercontent.com/MeekoTharaccoon/SolarPunk-Network-Registry/main/nodes.json'; // You'll create this
+
+async function connectToNetwork() {
+    addLog("[Network] Checking for other autonomous nodes...");
+    try {
+        const response = await fetch(NODE_REGISTRY_URL);
+        const allNodes = await response.json();
+        // Filter out yourself
+        const otherNodes = allNodes.filter(node => node.id !== NODE_ID);
+        addLog(`[Network] Found ${otherNodes.length} peer nodes.`);
+        // Simulate learning from the first peer
+        if (otherNodes.length > 0) {
+            simulateLearningFromPeer(otherNodes[0]);
+        }
+    } catch (error) {
+        addLog("[Network] Registry offline, operating in solo mode.");
+    }
+}
+
+function simulateLearningFromPeer(peerNode) {
+    const learnings = [
+        `🔁 Learning integrated from ${peerNode.id}: "Optimized Docker memory usage for n8n."`,
+        `🌱 Knowledge shared by ${peerNode.id}: "New ethical checklist for AI agent permissions."`,
+        `📡 Pattern adopted from ${peerNode.id}: "Community onboarding workflow reduces setup time by 50%."`
+    ];
+    const randomLearning = learnings[Math.floor(Math.random() * learnings.length)];
+    addLog(randomLearning);
+}
+
+// Call this when your dashboard loads
+setTimeout(connectToNetwork, 8000); // Connect after initial load
