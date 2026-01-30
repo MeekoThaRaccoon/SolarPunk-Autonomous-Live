@@ -2,38 +2,37 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ main ]  # Change to 'master' if that's your default branch
+  workflow_dispatch:    # Allows you to run it manually from the Actions tab
 
 permissions:
+  contents: read
   pages: write
   id-token: write
 
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   deploy:
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
-          
+          path: '.'  # Uploads everything in the repository root
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
-      - name: Post-deployment message
-        run: |
-          echo "🎉 SolarPunk Autonomous deployed!"
-          echo "🌐 Live at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
-          echo "🤖 AI Collective operational"
-          echo "⚡ System autonomous - no human intervention needed"
